@@ -4,6 +4,95 @@
   
   
   <entry>
+    <title>配置raspap</title>
+    <link href="/2021/05/14/raspap/"/>
+    <url>/2021/05/14/raspap/</url>
+    
+    <content type="html"><![CDATA[<p>raspap其实是个类似于整合包一样的东西，把hostapd，dnsmasq之类的打包在一起然后提供而webUI给你管理，让你的树莓派摇身一变直接变成一个ap</p><h1 id="开始之前"><a href="#开始之前" class="headerlink" title="开始之前"></a>开始之前</h1><p>先把各种东西升级好</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get update<br>sudo apt-get fullupgrade<br>sudo reboot<br></code></pre></td></tr></table></figure><p>然后到<code>raspi-config</code>里设置好wifi地区</p><h1 id="开始安装吧！"><a href="#开始安装吧！" class="headerlink" title="开始安装吧！"></a>开始安装吧！</h1><p>raspap同样提供了一键安装脚本，只需要在终端中输入</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">curl -sL https://install.raspap.com | bash<br></code></pre></td></tr></table></figure><p>脚本就会自动帮你安装（需要魔法上网）</p><p>你也可以手动安装，<a href="https://docs.raspap.com/manual/">这里是官方文档</a>，在此不赘述</p><p>默认配置如下：</p><figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ldif"><span class="hljs-attribute">IP address</span>: 10.3.141.1<br><span class="hljs-attribute">Username</span>: admin<br><span class="hljs-attribute">Password</span>: secret<br><span class="hljs-attribute">DHCP range</span>: 10.3.141.50 to 10.3.141.255<br><span class="hljs-attribute">SSID</span>: raspi-webgui<br><span class="hljs-attribute">Password</span>: ChangeMe<br></code></pre></td></tr></table></figure><p>连接到热点然后访问网关，或是访问<code>[树莓派ip]</code>即可对热点进行配置</p><blockquote><p>做这个ap一方面可以解决校园网的ip数限制问题，另一方面可能对未来在宿舍搞物联网会有点好处？</p></blockquote>]]></content>
+    
+    
+    <categories>
+      
+      <category>树莓派</category>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>树莓派</tag>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>在树莓派上运行BT下载</title>
+    <link href="/2021/05/14/BT-on-raspi/"/>
+    <url>/2021/05/14/BT-on-raspi/</url>
+    
+    <content type="html"><![CDATA[<h1 id="配置qBittorrent"><a href="#配置qBittorrent" class="headerlink" title="配置qBittorrent"></a>配置qBittorrent</h1><p>一台7*24的运行的树莓派，不用来下bt实在是太可惜了</p><h2 id="安装qBittorrent"><a href="#安装qBittorrent" class="headerlink" title="安装qBittorrent"></a>安装qBittorrent</h2><p>在终端运行命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt install qbittorrent qbittorrent-nox<br></code></pre></td></tr></table></figure><p>即可安装qbbittorrent和对应的web ui</p><h2 id="将qBittorrent设置为服务并开机自启"><a href="#将qBittorrent设置为服务并开机自启" class="headerlink" title="将qBittorrent设置为服务并开机自启"></a>将qBittorrent设置为服务并开机自启</h2><p>先别急着启动，接下来将qBittorrent设置为Service并保持常驻</p><p>运行以下命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 新建用户组</span><br>sudo adduser --system --group qbittorrent-nox<br><span class="hljs-comment"># 将自己加入到这个用户组中</span><br>sudo adduser [your-username] qbittorrent-nox<br><span class="hljs-comment"># 创建服务</span><br>sudo nano /etc/systemd/system/qbittorrent-nox.service<br></code></pre></td></tr></table></figure><p>输入以下内容</p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[Unit]</span><br><span class="hljs-attr">Description</span>=qBittorrent Command Line Client<br><span class="hljs-attr">After</span>=network.target<br><br><span class="hljs-section">[Service]</span><br><span class="hljs-comment">#Do not change to &quot;simple&quot;</span><br><span class="hljs-attr">Type</span>=forking<br><span class="hljs-attr">User</span>=qbittorrent-nox<br><span class="hljs-attr">Group</span>=qbittorrent-nox<br><span class="hljs-attr">UMask</span>=<span class="hljs-number">007</span><br><span class="hljs-attr">ExecStart</span>=/usr/bin/qbittorrent-nox -d --webui-port=<span class="hljs-number">8080</span><br><span class="hljs-attr">Restart</span>=<span class="hljs-literal">on</span>-failure<br><br><span class="hljs-section">[Install]</span><br><span class="hljs-attr">WantedBy</span>=multi-user.target<br></code></pre></td></tr></table></figure><p>保存，然后在终端中运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl start qbittorrent-nox<br></code></pre></td></tr></table></figure><p>开始运行</p><p>如果要开机自启，就运行</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo systemctl <span class="hljs-built_in">enable</span> qbittorrent-nox<br></code></pre></td></tr></table></figure><p>然后再访问<code>https://[ip]:8080</code>即可打开webUI，默认账户密码为</p><figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">account:</span>admin<br><span class="hljs-symbol">password:</span>adminadmin<br></code></pre></td></tr></table></figure><p>在webUI的设置中修改密码，保存即可</p><p><img src="/2021/05/14/BT-on-raspi/qbittorrent.png" alt="qbittorrent的webUI效果"></p>]]></content>
+    
+    
+    <categories>
+      
+      <category>树莓派</category>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>树莓派</tag>
+      
+      <tag>Linux</tag>
+      
+      <tag>BT</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>树莓派配置记录</title>
+    <link href="/2021/05/14/raspi/"/>
+    <url>/2021/05/14/raspi/</url>
+    
+    <content type="html"><![CDATA[<p>其实一个月前就买了一个树莓派4B了，前两天搞着搞着把系统给弄炸了，又要从头来一遍，索性把配置过程记录一下吧</p><h1 id="系统安装"><a href="#系统安装" class="headerlink" title="系统安装"></a>系统安装</h1><p>我用的是树莓派官方发布的基于debian的raspios，先用win32diskimager把系统镜像烧录到sd卡中</p><p><img src="/2021/05/14/raspi/win32diskimager.png" alt="win32diskimager"></p><p>接着把sd卡装上树莓派，<del>插腚揩鸡</del></p><p>最开始先用显示器，把第一次开机的各种设置先调一下，然后把ssh跟vnc打开，再运行<code>raspi-config</code> ，把分辨率从default调成别的，插上网线，重启之后之后就可以用电脑远程访问了</p><blockquote><p>调分辨率的原因是我这里如果用default，vnc显示不了画面</p><p>不用无线的原因主要有两个，一方面校园网的无线ap可能是做了隔离还是什么的，如果用无线网，电脑的ssh连不上；另一方面，我打算在树莓派上面跑个ap，所以只能用有线网</p></blockquote><p><img src="/2021/05/14/raspi/desktop.png" alt="桌面"></p><p>接着更一下软件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt update<br>sudo apt upgrade<br></code></pre></td></tr></table></figure><p>就可以开始叻！</p><h1 id="魔法上网"><a href="#魔法上网" class="headerlink" title="魔法上网"></a>魔法上网</h1><p>到github上下载clash的二进制文件。由于树莓派4B是ARMv7架构所以选择armv7-linux版本</p><p>我个人喜欢把自己一些长时间运行的东西放到<code>~/Service</code>下面，所以把clash存到了这里</p><p>然后在终端跑</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> /home/pi/Service<br>chmod +x ./clash<br>./clash<br></code></pre></td></tr></table></figure><p>生成一次配置文件</p><p>再把机场给的clash配置文件放到<code>~/.config/clash</code>，覆盖原来的config.yaml</p><p>然后再在终端里运行clash，打开网页<code>clash.razord.top</code>查看是否正常运行即可，要记得去设置里允许来自局域网的链接</p><p>我个人不是很喜欢在树莓派上长时间开着clash，所以就不搞开机自启之类的了</p><p>终端里面需要用到的时候就</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs bash">~/Service/clash<br><span class="hljs-comment"># ctrl+z</span><br><span class="hljs-built_in">bg</span><br><span class="hljs-built_in">export</span> http_proxy=<span class="hljs-string">&quot;http://localhost:7890&quot;</span><br><span class="hljs-built_in">export</span> https_proxy=<span class="hljs-string">&quot;http://localhost:7890&quot;</span><br></code></pre></td></tr></table></figure><h1 id="安装netdata监控"><a href="#安装netdata监控" class="headerlink" title="安装netdata监控"></a>安装netdata监控</h1><p>netdata是一个可视化的web端监控UI，可以用于监控树莓派的运行状况</p><p>安装也很简单，官方提供了一键安装脚本，所以在终端直接输入</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">bash &lt;(curl -Ss https://my-netdata.io/kickstart.sh)<br></code></pre></td></tr></table></figure><p>然后根据提示一路enter就可以了</p><p><img src="/2021/05/14/raspi/netdata.png" alt="netdata运行效果"></p><h1 id="配置Selenium"><a href="#配置Selenium" class="headerlink" title="配置Selenium"></a>配置Selenium</h1><p>其实最开始让我动买树莓派这个念头的是自动登录校园网这个想法。学校的校园网是每台设备24小时要重新登陆一次，手机的wifi登录页面又不能保存密码，还是有点麻烦。</p><p>之前试过抓包，结果后面发现校园网发的包似乎是用js加密过的，遂放弃。</p><p>后来发现了Selenium这么个浏览器自动测试脚本，我就打算通过它来模拟校园网登录。</p><p>在终端运行如下命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 安装selenium包</span><br>pip3 install selenium<br><span class="hljs-comment"># 安装对应的driver</span><br>sudo apt install chromium-chromedriver<br></code></pre></td></tr></table></figure><p>然后就可以用py写脚本了，由于脚本涉及到一些敏感内容就不放在这里了。</p><p>感兴趣的读者可以自行了解一下selenium相关内容</p><hr><p>配置的话暂时就只有这么多，迟点再加别的折腾的内容吧</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>树莓派</category>
+      
+      <category>Linux</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>树莓派</tag>
+      
+      <tag>Linux</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Hello World</title>
     <link href="/2021/05/13/hello-world/"/>
     <url>/2021/05/13/hello-world/</url>

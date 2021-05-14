@@ -4,11 +4,36 @@
   
   
   <entry>
+    <title>留言板</title>
+    <link href="/2021/05/15/Bulletin-board/"/>
+    <url>/2021/05/15/Bulletin-board/</url>
+    
+    <content type="html"><![CDATA[<p>来畅所欲言吧！</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>日常</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>日常</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>在树莓派上跑BOINC</title>
     <link href="/2021/05/14/boinc-on-raspi/"/>
     <url>/2021/05/14/boinc-on-raspi/</url>
     
-    <content type="html"><![CDATA[<h1 id="BOINC是什么？"><a href="#BOINC是什么？" class="headerlink" title="BOINC是什么？"></a>BOINC是什么？</h1><p>BOINC是<strong>伯克利开放式网络计算平台(Berkeley Open Infrastructure for Network Computing)</strong>的缩写，是一个分布式计算平台。</p><p>粗略来讲，就是项目发布者可以在平台上发布计算任务，全球各地的电脑用户可以在平台上下载这些任务并进行计算，贡献自己的空闲算力。</p><p><strong>这不比挖矿炒币高尚？</strong></p><h1 id="在树莓派上安装BOINC"><a href="#在树莓派上安装BOINC" class="headerlink" title="在树莓派上安装BOINC"></a>在树莓派上安装BOINC</h1><p>其实也很简单，用apt就可以搞定</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt update<br>sudo apt install boinc<br></code></pre></td></tr></table></figure><p>按照BOINC官网的说法，安装之后会自动把boinc设为自启动，这时候只需要重启即可</p><p>也可以在终端中运行<code>/etc/init.d/boinc-client start</code>手动启动</p><p>接着你会在菜单的系统工具里看到BOINC Manager</p><p><img src="/2021/05/14/boinc-on-raspi/boincmgr.png" alt="boinc manager"></p><p>直接运行就可以了</p><p><del>至少网上所有的教程都是这么告诉我的</del></p><hr><p>直接运行之后，manager一直在连接到localhost，死活连不上</p><p>搞了一下午，直到我跑到boinc目录下面看到了这玩意</p><p><img src="/2021/05/14/boinc-on-raspi/remote_hosts.png" alt></p><p><img src="/2021/05/14/boinc-on-raspi/hostlist.png" alt></p><p>那没事了</p><p>在后面把本机ip加上，不知道为什么直接写127.0.0.1，于是把有线和无线网卡的ip都加了进去</p><p>再打开BOINC Manager</p><p><img src="/2021/05/14/boinc-on-raspi/boincmgrwindow.png" alt></p><p>完美√</p><hr><p>以前的话我是参加过SETI，Universe和Rosetta三个计划</p><p>不过现在好像SETI暂时没任务，Rosetta又不能用树莓派跑，只能跑Universe了</p><p><del>可惜Universe没有炫酷图片</del></p><p><img src="/2021/05/14/boinc-on-raspi/Universe.png" alt="Universe"></p><p>再把计算参数稍微调一下，不要让运算强度太高了</p><p>看一下温度</p><p><img src="/2021/05/14/boinc-on-raspi/temp.png" alt="温度"></p><p>还不错</p>]]></content>
+    <content type="html"><![CDATA[<h1 id="BOINC是什么？"><a href="#BOINC是什么？" class="headerlink" title="BOINC是什么？"></a>BOINC是什么？</h1><p>BOINC是<strong>伯克利开放式网络计算平台(Berkeley Open Infrastructure for Network Computing)</strong>的缩写，是一个分布式计算平台。</p><p>粗略来讲，就是项目发布者可以在平台上发布计算任务，全球各地的电脑用户可以在平台上下载这些任务并进行计算，贡献自己的空闲算力。</p><p><strong>这不比挖矿炒币高尚？</strong></p><h1 id="在树莓派上安装BOINC"><a href="#在树莓派上安装BOINC" class="headerlink" title="在树莓派上安装BOINC"></a>在树莓派上安装BOINC</h1><p>其实也很简单，用apt就可以搞定</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt update<br>sudo apt install boinc<br></code></pre></td></tr></table></figure><p>按照BOINC官网的说法，安装之后会自动把boinc设为自启动，这时候只需要重启即可</p><p>也可以在终端中运行<code>/etc/init.d/boinc-client start</code>手动启动</p><p>接着你会在菜单的系统工具里看到BOINC Manager</p><p><img src="/2021/05/14/boinc-on-raspi/boincmgr.png" alt="boinc manager"></p><p>直接运行就可以了</p><p><del>至少网上所有的教程都是这么告诉我的</del></p><hr><p>直接运行之后，manager一直在连接到localhost，死活连不上</p><p>搞了一下午，直到我跑到boinc目录下面看到了这玩意</p><p><img src="/2021/05/14/boinc-on-raspi/remote_hosts.png" alt></p><p><img src="/2021/05/14/boinc-on-raspi/hostlist.png" alt></p><p>那没事了</p><p>在后面把本机ip加上，不知道为什么直接写127.0.0.1不好使，于是把有线和无线网卡的ip都加了进去</p><p>再打开BOINC Manager</p><p><img src="/2021/05/14/boinc-on-raspi/boincmgrwindow.png" alt></p><p>完美√</p><hr><p>以前的话我是参加过SETI，Universe和Rosetta三个计划</p><p>不过现在好像SETI暂时没任务，Rosetta又不能用树莓派跑，只能跑Universe了</p><p><del>可惜Universe没有炫酷图片</del></p><p><img src="/2021/05/14/boinc-on-raspi/Universe.png" alt="Universe"></p><p>再把计算参数稍微调一下，不要让运算强度太高了</p><p>看一下温度</p><p><img src="/2021/05/14/boinc-on-raspi/temp.png" alt="温度"></p><p>还不错</p>]]></content>
     
     
     <categories>
@@ -35,7 +60,7 @@
   
   
   <entry>
-    <title>配置raspap</title>
+    <title>在树莓派上配置raspap</title>
     <link href="/2021/05/14/raspap/"/>
     <url>/2021/05/14/raspap/</url>
     

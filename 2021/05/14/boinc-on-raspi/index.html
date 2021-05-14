@@ -14,13 +14,29 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
   <meta name="theme-color" content="#1987cf">
-  <meta name="description" content="嗨！这是lizbaka的博客！">
+  <meta name="description" content="那既然有了一台7*24的树莓派，还是4B，只是用来BT下载或者自动登录而不算点东西是不是太浪费了？">
   <meta name="author" content="lizbaka">
   <meta name="keywords" content="">
   
-  <title>标签 - Linux - lizbaka的的小站</title>
+  <title>在树莓派上跑BOINC - lizbaka的的小站</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
 
 
 
@@ -48,7 +64,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -159,17 +175,50 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="标签 - Linux">
+            <span class="h2" id="subtitle" title="在树莓派上跑BOINC">
               
             </span>
 
             
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-05-14 19:11" pubdate>
+        2021年5月14日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      393 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      4
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
           </div>
 
-          
-            <div class="scroll-down-bar">
-              <i class="iconfont icon-arrowdown"></i>
-            </div>
           
         </div>
       </div>
@@ -178,58 +227,156 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">共计 4 篇文章</p>
-  <hr>
-  
-  
-    
       
-      <p class="h5">2021</p>
-    
-    <a href="/2021/05/14/boinc-on-raspi/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">在树莓派上跑BOINC</span>
-      <time style="float: right;">05-14</time>
-    </a>
-  
-    
-    <a href="/2021/05/14/raspap/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">配置raspap</span>
-      <time style="float: right;">05-14</time>
-    </a>
-  
-    
-    <a href="/2021/05/14/BT-on-raspi/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">在树莓派上运行BT下载</span>
-      <time style="float: right;">05-14</time>
-    </a>
-  
-    
-    <a href="/2021/05/14/raspi/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">树莓派配置记录</span>
-      <time style="float: right;">05-14</time>
-    </a>
-  
-</div>
 
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">在树莓派上跑BOINC</h1>
+            
+            <div class="markdown-body">
+              <h1 id="BOINC是什么？"><a href="#BOINC是什么？" class="headerlink" title="BOINC是什么？"></a>BOINC是什么？</h1><p>BOINC是<strong>伯克利开放式网络计算平台(Berkeley Open Infrastructure for Network Computing)</strong>的缩写，是一个分布式计算平台。</p>
+<p>粗略来讲，就是项目发布者可以在平台上发布计算任务，全球各地的电脑用户可以在平台上下载这些任务并进行计算，贡献自己的空闲算力。</p>
+<p><strong>这不比挖矿炒币高尚？</strong></p>
+<h1 id="在树莓派上安装BOINC"><a href="#在树莓派上安装BOINC" class="headerlink" title="在树莓派上安装BOINC"></a>在树莓派上安装BOINC</h1><p>其实也很简单，用apt就可以搞定</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt update<br>sudo apt install boinc<br></code></pre></td></tr></table></figure>
+<p>按照BOINC官网的说法，安装之后会自动把boinc设为自启动，这时候只需要重启即可</p>
+<p>也可以在终端中运行<code>/etc/init.d/boinc-client start</code>手动启动</p>
+<p>接着你会在菜单的系统工具里看到BOINC Manager</p>
+<p><img src="/2021/05/14/boinc-on-raspi/boincmgr.png" srcset="/img/loading.gif" lazyload alt="boinc manager"></p>
+<p>直接运行就可以了</p>
+<p><del>至少网上所有的教程都是这么告诉我的</del></p>
+<hr>
+<p>直接运行之后，manager一直在连接到localhost，死活连不上</p>
+<p>搞了一下午，直到我跑到boinc目录下面看到了这玩意</p>
+<p><img src="/2021/05/14/boinc-on-raspi/remote_hosts.png" srcset="/img/loading.gif" lazyload alt></p>
+<p><img src="/2021/05/14/boinc-on-raspi/hostlist.png" srcset="/img/loading.gif" lazyload alt></p>
+<p>那没事了</p>
+<p>在后面把本机ip加上，不知道为什么直接写127.0.0.1，于是把有线和无线网卡的ip都加了进去</p>
+<p>再打开BOINC Manager</p>
+<p><img src="/2021/05/14/boinc-on-raspi/boincmgrwindow.png" srcset="/img/loading.gif" lazyload alt></p>
+<p>完美√</p>
+<hr>
+<p>以前的话我是参加过SETI，Universe和Rosetta三个计划</p>
+<p>不过现在好像SETI暂时没任务，Rosetta又不能用树莓派跑，只能跑Universe了</p>
+<p><del>可惜Universe没有炫酷图片</del></p>
+<p><img src="/2021/05/14/boinc-on-raspi/Universe.png" srcset="/img/loading.gif" lazyload alt="Universe"></p>
+<p>再把计算参数稍微调一下，不要让运算强度太高了</p>
+<p>看一下温度</p>
+<p><img src="/2021/05/14/boinc-on-raspi/temp.png" srcset="/img/loading.gif" lazyload alt="温度"></p>
+<p>还不错</p>
 
-
-
-
-              </div>
             </div>
-          </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a>
+                    
+                      <a class="hover-with-bg" href="/categories/Linux/">Linux</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Linux/">Linux</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/">分布式计算</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-NC-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/05/14/raspap/">
+                        <span class="hidden-mobile">配置raspap</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function () {
+        new Valine({
+          el: "#valine",
+          app_id: "KsGqOmorm4pNNNwC998YvcMO-gzGzoHsz",
+          app_key: "I0wOCi09raDHxqM5lu1krV4v",
+          placeholder: "说点什么",
+          path: window.location.pathname,
+          avatar: "mp",
+          meta: ["nick","mail","link"],
+          pageSize: "10",
+          lang: "zh-CN",
+          highlight: false,
+          recordIP: false,
+          serverURLs: "",
+        });
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -309,9 +456,15 @@
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.2/dist/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.0/anchor.min.js" ></script>
 
 
 

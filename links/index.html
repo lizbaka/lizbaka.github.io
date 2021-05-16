@@ -37,6 +37,10 @@
 
 <!-- 自定义样式保持在最底部 -->
 
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
@@ -244,9 +248,14 @@
       <a href="http://106.14.253.40/" class="card-body hover-with-bg" target="_blank" rel="noopener">
         <div class="card-content">
           
+            <div class="link-avatar my-auto">
+              <img src="/img/erroravatar.png" srcset="/img/loading.gif" lazyload alt="糖矿的个人主页"
+                   onerror="this.onerror=null; this.src=this.srcset='/img/erroravatar.png'"/>
+            </div>
+          
           <div class="link-text">
             <div class="link-title">糖矿的个人主页</div>
-            <div class="link-intro"></div>
+            <div class="link-intro">非常卷的糖矿dalao</div>
           </div>
         </div>
       </a>
@@ -351,7 +360,7 @@
     
       <div class="col-lg-7 mx-auto nopadding-x-md">
         <div class="container custom mx-auto">
-          <script id="ribbon" src="/js/ribbon.js"></script>
+          <script id="ribbon" alpha="0.3" src="/js/ribbon.js"></script>
         </div>
       </div>
     

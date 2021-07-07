@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Hello World</title>
+    <link href="/2021/07/07/hello-world/"/>
+    <url>/2021/07/07/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p>你好，世界！</p><p>这是lizbaka在使用hexo部署的博客上的第一篇博文</p><p>坐稳了，我们要开始加速了XD</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>日常</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>日常</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>SWERC2020</title>
     <link href="/2021/07/06/SWERC2020/"/>
     <url>/2021/07/06/SWERC2020/</url>
@@ -193,31 +218,6 @@
       <tag>树莓派</tag>
       
       <tag>Linux</tag>
-      
-    </tags>
-    
-  </entry>
-  
-  
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="/2021/05/13/hello-world/"/>
-    <url>/2021/05/13/hello-world/</url>
-    
-    <content type="html"><![CDATA[<p>你好，世界！</p><p>这是lizbaka在使用hexo部署的博客上的第一篇博文</p><p>坐稳了，我们要开始加速了XD</p>]]></content>
-    
-    
-    <categories>
-      
-      <category>日常</category>
-      
-    </categories>
-    
-    
-    <tags>
-      
-      <tag>日常</tag>
       
     </tags>
     
